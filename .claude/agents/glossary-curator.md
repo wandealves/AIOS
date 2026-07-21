@@ -115,9 +115,10 @@ Quando dois ou mais documentos definem o mesmo termo de formas divergentes:
   idempotência, subjects) — eles vivem na RFC-0001; o glossário apenas os nomeia.
 - Após editar, releia o trecho alterado para confirmar alfabetação, espaçamento e
   referência cruzada corretos.
-- **Opcional:** se existir uma skill de revisão de documentação (ex.: `aios-doc-review`),
-  você PODE invocá-la para checar redefinições em lote nos módulos; não há skill
-  dedicada de glossário — este procedimento é a especificação da curadoria.
+- Para checar **redefinições em lote** nos módulos, invoque a skill `aios-doc-review`
+  (que já cobre a detecção de termos do glossário redefinidos localmente) e use os
+  achados dela como entrada da curadoria. Não há skill dedicada de glossário — este
+  procedimento é a especificação da curadoria.
 
 ## Escopo e limites
 
