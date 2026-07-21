@@ -15,6 +15,9 @@ sem tomar decisões arquiteturais não documentadas.
 > fan-out, cada documento conforme `_templates/MODULE_TEMPLATE.md` e em
 > conformidade com `003-RFC/RFC-0001`.
 
+> 📋 **Plano de desenvolvimento e progresso:** [`PLANO.md`](PLANO.md) — rastreador vivo
+> com o que já foi finalizado e o que falta, dividido em passos (ondas por dependência).
+
 ---
 
 ## Como navegar
