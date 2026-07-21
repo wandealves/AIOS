@@ -80,7 +80,7 @@ latência. Violação sustentada de qualquer um dos três SLOs por 15 minutos
 A **Context Compression Ratio** é definida como
 `1 − tokens_in/tokens_raw` (idêntica ao campo `compression_ratio` de
 `ContextBundle`, brief §3.1) e **DEVE** ter média ≥ 0,50 em regime permanente,
-respeitando o piso configurável `context.compression.min_compression_ratio`
+respeitando o piso configurável `context.budget.min_compression_ratio`
 (default 0,30) por `BudgetProfile`. Entretanto, compressão agressiva sem
 controle de qualidade é uma **não-meta**: a Δ Task Completion Rate frente a um
 baseline sem compressão **NÃO DEVE** cair mais que 2 pontos percentuais

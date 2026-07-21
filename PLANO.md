@@ -15,13 +15,13 @@
 | Métrica | Valor |
 |---|---|
 | Fundação canônica (000–003, 040) | ✅ 5/5 |
-| Módulos técnicos completos (004–039) | **4 / 36** |
-| Módulos técnicos em andamento | 2 (007, 011) |
-| Documentos técnicos escritos | **129 / 936** (36 módulos × 26 docs) |
+| Módulos técnicos completos (004–039) | **5 / 36** |
+| Módulos técnicos em andamento | 1 (007) |
+| Documentos técnicos escritos | **133 / 936** (36 módulos × 26 docs) |
 
 ```
 Fundação   [██████████] 100%   (000, 001, 002, 003, 040)
-Módulos    [█░░░░░░░░░░]  11%   (4 completos / 36 técnicos)
+Módulos    [█░░░░░░░░░░]  14%   (5 completos / 36 técnicos)
 ```
 
 ---
@@ -67,8 +67,7 @@ Base terminológica/arquitetural e os primeiros módulos no padrão de ouro.
 
 Fechar os módulos já iniciados e escrever os contratos (API/DB) que os demais mais referenciam.
 
-- [ ] 🟨 **011-Context** (22/26) — `[x]` brief · `[ ]` 26 docs · `[ ]` auditoria
-      - Faltam 4 docs: `Benchmark.md`, `Configuration.md`, `Logging.md`, `Testing.md`
+- [x] ✅ **011-Context** (26/26) — `[x]` brief · `[x]` 26 docs · `[x]` auditoria (0 bloqueantes; defeitos Alto/Médio/Baixo corrigidos)
 - [ ] 🟨 **007-Agent-Runtime** (3/26) — `[x]` brief · `[ ]` 26 docs · `[ ]` auditoria
       - Faltam 23 docs (feitos: `Vision`, `Architecture`, `Requirements`)
 - [ ] ⬜ **004-API** (0/26) — `[ ]` brief · `[ ]` 26 docs · `[ ]` auditoria

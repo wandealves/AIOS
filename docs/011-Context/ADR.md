@@ -1,5 +1,5 @@
 ---
-Documento: ADR.md
+Documento: ADR
 Módulo: 011-Context
 Status: Draft
 Versão: 0.1

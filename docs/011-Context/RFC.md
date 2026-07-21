@@ -1,5 +1,5 @@
 ---
-Documento: RFC.md
+Documento: RFC
 Módulo: 011-Context
 Status: Draft
 Versão: 0.1

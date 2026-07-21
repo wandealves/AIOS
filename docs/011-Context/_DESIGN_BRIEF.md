@@ -524,6 +524,7 @@ service ContextService {
 | `context.ratelimit.assemble_rps_per_tenant` | `1000` | `1–100000` | tenant | sim |
 | `context.degraded.allow_truncate_fallback` | `true` | bool | tenant | sim |
 | `context.shard.count` | `64` | `1–4096` | global | não |
+| `context.telemetry.cache_miss_sample_rate` | `1.0` | `0.0–1.0` | tenant/task_type | sim |
 
 ---
 
@@ -541,6 +542,10 @@ service ContextService {
 | FM-08 | Cache poisoning / falso-hit | eval offline + `similarity` audit | Elevar `similarity_threshold`; invalidar cluster afetado; quarentena. | Invalidação idempotente. | RTO ≤ 5 min |
 | FM-09 | Idempotency conflict | key repetida, payload ≠ | `AIOS-CTX-0012`; não reexecuta. | Registro de idempotência 24h. | — |
 | FM-10 | Perda de nó do serviço | probe/orchestrator | Stateless: réplicas assumem; estado quente em Redis, verdade em PG. | N/A. | RTO ≤ 5 min / RPO ≤ 60 s |
+| FM-11 | Payload de entrada excede `context.limits.max_payload_bytes` | validação no `ContextApiGateway` | Rejeita com `AIOS-CTX-0013` (413). | Não retriable. | — |
+| FM-12 | `BudgetProfile` com pesos que não somam 1.0 | validação de escrita (invariante §3.4) | Rejeita com `AIOS-CTX-0008` (422). | Não retriable. | — |
+| FM-13 | `bundle_id` inexistente/expirado em `GetBundle` | consulta a `BundleStore` | Retorna `AIOS-CTX-0007` (404). | Não retriable. | — |
+| FM-14 | Estouro de rate-limit por tenant | contador do `ContextApiGateway` | Rejeita com `AIOS-CTX-0015` (429) + `Retry-After`. | Retry pelo cliente após backoff. | — |
 
 **Princípios:** toda mutação é idempotente por `Idempotency-Key`/`event.id`;
 publicação de eventos usa **outbox transacional**; caminho quente evita I/O
