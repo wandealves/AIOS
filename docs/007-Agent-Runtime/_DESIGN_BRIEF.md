@@ -7,7 +7,7 @@ Versão: 0.1
 Responsável (RACI-A): Arquiteto do Módulo 007 — Agent Runtime
 ADRs relacionados: ADR-0070, ADR-0071, ADR-0072, ADR-0073, ADR-0074, ADR-0075, ADR-0076, ADR-0077, ADR-0078, ADR-0079 (propostas por este módulo); ADR-0001, ADR-0002, ADR-0003 (globais)
 RFCs relacionados: RFC-0001 (baseline), RFC-0070 (Runtime↔Supervisor Control Protocol — proposta), RFC-0071 (MCP Host Sandboxing Profile — proposta)
-Depende de: 006-Kernel, 008-Lifecycle, 009-Scheduler, 010-Memory, 011-Context, 012-Planning, 015-Tool-Manager, 017-Model-Router, 020-Communication, 021-Security, 022-Policy, 024-Observability, 025-Audit
+Depende de: 006-Kernel, 008-Agent-Lifecycle, 009-Scheduler, 010-Memory, 011-Context, 012-Planning, 015-Tool-Manager, 017-Model-Router, 020-Communication, 021-Security, 022-Policy, 024-Observability, 025-Audit
 ---
 
 # AIOS — Design Brief do Módulo 007 · Agent Runtime
@@ -36,11 +36,11 @@ Ele executa o **loop cognitivo** de um agente isolado em **sandbox**, hospeda o
 **MCP host** para ferramentas, invoca ferramentas exclusivamente via
 `015-Tool-Manager` e modelos exclusivamente via `017-Model-Router`. Um processo
 supervisor separado, o **Runtime Supervisor** (`.NET 10`, pertencente ao plano de
-controle, descrito em `001-Architecture` e coordenado por `008-Lifecycle`),
+controle, descrito em `001-Architecture` e coordenado por `008-Agent-Lifecycle`),
 gerencia o **pool** de runtimes (cria/monitora/mata), aplica cotas de nível de
 pool e faz o *placement*. Este módulo especifica o **processo runtime Python** e o
 **contrato** que ele expõe ao Supervisor; a implementação do Supervisor em .NET é
-responsabilidade compartilhada com `008-Lifecycle`/`009-Scheduler` e está fora do
+responsabilidade compartilhada com `008-Agent-Lifecycle`/`009-Scheduler` e está fora do
 código deste módulo, embora o **protocolo** seja co-definido aqui (RFC-0070).
 
 ### 1.2 Responsabilidades (o que o módulo DEVE fazer)
@@ -67,7 +67,7 @@ código deste módulo, embora o **protocolo** seja co-definido aqui (RFC-0070).
 | # | Não-responsabilidade | Dono correto |
 |---|----------------------|--------------|
 | N-01 | Decidir **onde**/**quando**/**com que prioridade** um agente executa (scheduling, admissão, preempção). | `009-Scheduler` |
-| N-02 | Gerenciar o **pool** de runtimes (criar/monitorar/matar réplicas), autoscaling e cotas de pool. | Runtime Supervisor (`008-Lifecycle`) |
+| N-02 | Gerenciar o **pool** de runtimes (criar/monitorar/matar réplicas), autoscaling e cotas de pool. | Runtime Supervisor (`008-Agent-Lifecycle`) |
 | N-03 | **Treinar/fine-tunar** modelos ou escolher provedor de LLM por custo/qualidade. | `017-Model-Router`, `026-Cost-Optimizer` |
 | N-04 | **Registrar/versionar** ferramentas, resolver permissões globais ou implementar drivers de tool. | `015-Tool-Manager` |
 | N-05 | Ser fonte da verdade de **memória**, **contexto**, **conhecimento** ou **auditoria** (apenas produtor/consumidor). | `010`, `011`, `018/019`, `025` |
@@ -104,7 +104,7 @@ código deste módulo, embora o **protocolo** seja co-definido aqui (RFC-0070).
 | **CapabilityEnforcer** | PEP local: valida *capability tokens* concedidos no boot e consulta o PDP quando a política exige decisão em tempo de ação. *Default deny*. | `022-Policy` (PDP via Kernel), `021-Security` |
 | **EventPublisher** | Publica eventos de domínio no NATS/JetStream com envelope CloudEvents (RFC-0001) via **outbox** transacional local (SQLite efêmero/WAL do sandbox) para atomicidade at-least-once. | NATS/JetStream (`020`) |
 | **TelemetryEmitter** | Emite traces/metrics/logs OTel com correlação `traceparent`/`tenant`/`agent`; exporta ao OTel Collector. | `024-Observability` |
-| **SupervisorChannel** | Canal de controle com o Runtime Supervisor: recebe `boot/suspend/resume/kill/drain`, reporta health/heartbeat e estado. gRPC (comando) + NATS (heartbeat/eventos). | Runtime Supervisor, `008-Lifecycle` |
+| **SupervisorChannel** | Canal de controle com o Runtime Supervisor: recebe `boot/suspend/resume/kill/drain`, reporta health/heartbeat e estado. gRPC (comando) + NATS (heartbeat/eventos). | Runtime Supervisor, `008-Agent-Lifecycle` |
 | **HealthProbe** | Endpoints/handlers de liveness, readiness e *startup*; watchdog do loop (detecta *stuck* e deadlock). | ExecutionStateMachine, SupervisorChannel |
 
 ### 2.2 Diagrama de componentes (ASCII)
@@ -577,6 +577,7 @@ quando indicado. Variáveis de ambiente prefixadas `AIOS_RT_`.
 | `watchdog.stuck_timeout_ms` | 120000 | 5000–600000 | G | sim |
 | `telemetry.sampling_ratio` | 1.0 | 0.0–1.0 | G/T | sim |
 | `pii.redaction.enabled` | true | bool | G/T | sim |
+| `runtime.pep.decision_cache_ttl_ms` | 5000 | 0–60000 | T | sim |
 
 ---
 

@@ -15,13 +15,13 @@
 | Métrica | Valor |
 |---|---|
 | Fundação canônica (000–003, 040) | ✅ 5/5 |
-| Módulos técnicos completos (004–039) | **5 / 36** |
-| Módulos técnicos em andamento | 1 (007) |
-| Documentos técnicos escritos | **133 / 936** (36 módulos × 26 docs) |
+| Módulos técnicos completos (004–039) | **6 / 36** |
+| Módulos técnicos em andamento | 0 |
+| Documentos técnicos escritos | **154 / 936** (36 módulos × 26 docs) |
 
 ```
 Fundação   [██████████] 100%   (000, 001, 002, 003, 040)
-Módulos    [█░░░░░░░░░░]  14%   (5 completos / 36 técnicos)
+Módulos    [██░░░░░░░░░]  17%   (6 completos / 36 técnicos)
 ```
 
 ---
@@ -68,8 +68,7 @@ Base terminológica/arquitetural e os primeiros módulos no padrão de ouro.
 Fechar os módulos já iniciados e escrever os contratos (API/DB) que os demais mais referenciam.
 
 - [x] ✅ **011-Context** (26/26) — `[x]` brief · `[x]` 26 docs · `[x]` auditoria (0 bloqueantes; defeitos Alto/Médio/Baixo corrigidos)
-- [ ] 🟨 **007-Agent-Runtime** (3/26) — `[x]` brief · `[ ]` 26 docs · `[ ]` auditoria
-      - Faltam 23 docs (feitos: `Vision`, `Architecture`, `Requirements`)
+- [x] ✅ **007-Agent-Runtime** (26/26) — `[x]` brief · `[x]` 26 docs · `[x]` auditoria (0 bloqueantes; defeitos Alto/Médio/Baixo corrigidos)
 - [ ] ⬜ **004-API** (0/26) — `[ ]` brief · `[ ]` 26 docs · `[ ]` auditoria
 - [ ] ⬜ **005-Database** (0/26) — `[ ]` brief · `[ ]` 26 docs · `[ ]` auditoria
 

@@ -7,7 +7,7 @@ Versão: 0.1
 Responsável (RACI-A): Arquiteto do Módulo 007 — Agent Runtime
 ADRs relacionados: ADR-0070, ADR-0071, ADR-0072, ADR-0073, ADR-0074, ADR-0075, ADR-0076, ADR-0077, ADR-0078, ADR-0079 (deste módulo, a propor); ADR-0001, ADR-0002, ADR-0003 (globais)
 RFCs relacionados: RFC-0001 (baseline); RFC-0070 (Runtime↔Supervisor Control Protocol, a propor); RFC-0071 (MCP Host Sandboxing Profile, a propor)
-Depende de: 006-Kernel, 008-Lifecycle, 009-Scheduler, 010-Memory, 011-Context, 012-Planning, 015-Tool-Manager, 017-Model-Router, 020-Communication, 021-Security, 022-Policy, 024-Observability, 025-Audit
+Depende de: 006-Kernel, 008-Agent-Lifecycle, 009-Scheduler, 010-Memory, 011-Context, 012-Planning, 015-Tool-Manager, 017-Model-Router, 020-Communication, 021-Security, 022-Policy, 024-Observability, 025-Audit
 ---
 
 # 007-Agent-Runtime — Arquitetura
@@ -58,7 +58,7 @@ PostgreSQL/pgvector/AGE — toda persistência durável (`AgentSession`,
 `ReActStep`, `ToolInvocation`, `ModelCall`, `Checkpoint`) trafega por gRPC/NATS
 aos serviços do control plane (`010-Memory`, `025-Audit`) que a possuem. Um
 processo separado do control plane, o **Runtime Supervisor** (.NET 10,
-coordenado por `008-Lifecycle`), gerencia o **pool** de instâncias de runtime
+coordenado por `008-Agent-Lifecycle`), gerencia o **pool** de instâncias de runtime
 (cria/monitora/mata, faz *placement*, aplica cotas de nível de pool); este
 módulo especifica apenas o **processo runtime Python** e o **contrato**
 (`RuntimeControl`, `AgentExecution`) que ele expõe ao Supervisor.
@@ -96,7 +96,7 @@ o Kernel/Supervisor/Policy compõem o espaço de controle que o supervisiona.
 
 | Ator/Sistema | Papel na interação com o Agent Runtime | Protocolo |
 |--------------|------------------------------------------|-----------|
-| Runtime Supervisor (.NET 10, `008-Lifecycle`) | Cria/monitora/mata a instância; comanda `Boot/Suspend/Resume/Kill/Drain`; recebe heartbeat. | gRPC (comando) + NATS (heartbeat) |
+| Runtime Supervisor (.NET 10, `008-Agent-Lifecycle`) | Cria/monitora/mata a instância; comanda `Boot/Suspend/Resume/Kill/Drain`; recebe heartbeat. | gRPC (comando) + NATS (heartbeat) |
 | `009-Scheduler` (indireto, via Supervisor) | Decide admissão/placement; o runtime nunca é consultado diretamente. | — (fora do escopo deste módulo) |
 | `010-Memory` | Recupera/persiste itens de memória (working/short/long/semantic/episodic/procedural). | gRPC |
 | `011-Context` | Monta janela de contexto, compressão, cache semântico. | gRPC |
@@ -148,7 +148,7 @@ o Kernel/Supervisor/Policy compõem o espaço de controle que o supervisiona.
 | Contêiner/Unidade | Responsabilidade | Persistência | Escala |
 |--------------------|-------------------|----------------|--------|
 | Runtime Instance (processo Python por agente) | Executa `RuntimeBootstrapper`, `ExecutionStateMachine`, `CognitiveLoopEngine`, `McpHost` e clientes de recurso (§4). Efêmero. | Outbox local SQLite/WAL (apenas até publicação confirmada); nenhum estado durável local. | Horizontal por pool; ≥ 500 sessões concorrentes por nó (NFR-004). |
-| Runtime Supervisor (.NET 10, fora do código deste módulo) | Cria/monitora/mata instâncias; mantém pool quente (`warm_size`); *placement*; cotas de pool. | — (control plane, `008-Lifecycle`). | N réplicas do Supervisor por cluster. |
+| Runtime Supervisor (.NET 10, fora do código deste módulo) | Cria/monitora/mata instâncias; mantém pool quente (`warm_size`); *placement*; cotas de pool. | — (control plane, `008-Agent-Lifecycle`). | N réplicas do Supervisor por cluster. |
 | Redis | *Lease* distribuído por `session_id` (exatamente-um-runtime-ativo); cache de decisão do PEP local. | Volátil (reconstruível). | Cluster com réplicas. |
 | NATS/JetStream | Transporte de heartbeat, eventos de ciclo de vida/execução, comandos consumidos de lifecycle/política/registro. | Streams de `020-Communication`. | Cluster NATS. |
 | OTel Collector / Serilog-Seq | Coleta traces/metrics/logs de cada instância; correlação `traceparent`/`tenant`/`agent`. | Exportado a `024-Observability`. | Sidecar por nó/pool. |
@@ -226,7 +226,7 @@ o Kernel/Supervisor/Policy compõem o espaço de controle que o supervisiona.
 | **CapabilityEnforcer** | PEP local: valida *capability tokens* concedidos no boot; consulta o PDP quando exigido. *Default deny*. | ActionExecutor, ToolInvoker, SandboxManager | `022-Policy` (via Kernel), `021-Security` |
 | **EventPublisher** | Publica eventos de domínio no NATS/JetStream com envelope CloudEvents via **outbox** transacional local (SQLite/WAL) para atomicidade. | ExecutionStateMachine, QuotaGovernor, CheckpointManager, CapabilityEnforcer | NATS/JetStream (`020`) |
 | **TelemetryEmitter** | Emite traces/metrics/logs OTel com correlação `traceparent`/`tenant`/`agent`; exporta ao OTel Collector. | Todos os componentes acima (transversal) | `024-Observability` |
-| **SupervisorChannel** | Canal de controle com o Runtime Supervisor: recebe `boot/suspend/resume/kill/drain`, reporta health/heartbeat e estado. | RuntimeBootstrapper, HealthProbe, ExecutionStateMachine | Runtime Supervisor, `008-Lifecycle` |
+| **SupervisorChannel** | Canal de controle com o Runtime Supervisor: recebe `boot/suspend/resume/kill/drain`, reporta health/heartbeat e estado. | RuntimeBootstrapper, HealthProbe, ExecutionStateMachine | Runtime Supervisor, `008-Agent-Lifecycle` |
 | **HealthProbe** | Endpoints/handlers de liveness, readiness e *startup*; watchdog do loop (detecta *stuck* e deadlock). | ExecutionStateMachine, SupervisorChannel | — |
 
 ---
@@ -306,7 +306,7 @@ Herdadas de `001-Architecture` §6 e reproduzidas do brief §2.2 (invioláveis):
                  ▼
         ┌──────────────────────────┐   consulta PDP    ┌──────────────┐
         │ Runtime Supervisor (.NET) │──────────────────▶│ 022-Policy    │
-        │ 008-Lifecycle / 009-Sched.│◀──────────────────│ (via 006)     │
+        │ 008-Agent-Lifecycle / 009-Sched.│◀──────────────────│ (via 006)     │
         └──────────────────────────┘                    └──────────────┘
                  │ outbox local → publica
                  ▼
@@ -375,7 +375,7 @@ camadas independentes e redundantes de contenção (defesa em profundidade).
   sessão (ADR-0079).
 - RFCs do módulo (a propor): ver `./RFC.md` — RFC-0070 (Runtime↔Supervisor
   Control Protocol), RFC-0071 (MCP Host Sandboxing Profile).
-- Componentes acoplados: `../006-Kernel/`, `../008-Lifecycle/`,
+- Componentes acoplados: `../006-Kernel/`, `../008-Agent-Lifecycle/`,
   `../009-Scheduler/`, `../010-Memory/`, `../011-Context/`, `../012-Planning/`,
   `../015-Tool-Manager/`, `../017-Model-Router/`, `../020-Communication/`,
   `../021-Security/`, `../022-Policy/`, `../024-Observability/`,

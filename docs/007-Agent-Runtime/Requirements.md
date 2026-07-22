@@ -7,7 +7,7 @@ Versão: 0.1
 Responsável (RACI-A): Arquiteto do Módulo 007 — Agent Runtime
 ADRs relacionados: ADR-0070, ADR-0071, ADR-0072, ADR-0073, ADR-0074, ADR-0075, ADR-0076, ADR-0077, ADR-0078, ADR-0079
 RFCs relacionados: RFC-0001, RFC-0070, RFC-0071
-Depende de: `_DESIGN_BRIEF.md` (deste módulo), `../001-Architecture/Architecture.md`, `../006-Kernel/`, `../008-Lifecycle/`, `../009-Scheduler/`, `../010-Memory/`, `../011-Context/`, `../012-Planning/`, `../015-Tool-Manager/`, `../017-Model-Router/`, `../020-Communication/`, `../021-Security/`, `../022-Policy/`, `../024-Observability/`, `../025-Audit/`
+Depende de: `_DESIGN_BRIEF.md` (deste módulo), `../001-Architecture/Architecture.md`, `../006-Kernel/`, `../008-Agent-Lifecycle/`, `../009-Scheduler/`, `../010-Memory/`, `../011-Context/`, `../012-Planning/`, `../015-Tool-Manager/`, `../017-Model-Router/`, `../020-Communication/`, `../021-Security/`, `../022-Policy/`, `../024-Observability/`, `../025-Audit/`
 ---
 
 # 007-Agent-Runtime — Requirements
@@ -56,7 +56,7 @@ Supervisor** (`.NET 10`, plano de controle) e ao barramento NATS/JetStream.
   (admissão, preempção, *placement*) — pertence a `009-Scheduler`.
 - Requisitos de **gerenciamento do pool** de runtimes (criar/monitorar/matar
   réplicas, autoscaling, cotas de pool) — pertence ao Runtime Supervisor
-  (`008-Lifecycle`).
+  (`008-Agent-Lifecycle`).
 - Requisitos de **escolha/roteamento de modelo** por custo/qualidade/latência
   — pertence a `017-Model-Router`.
 - Requisitos de **registro/versionamento de ferramentas** e implementação de
@@ -76,7 +76,7 @@ Supervisor** (`.NET 10`, plano de controle) e ao barramento NATS/JetStream.
 |-------------|------------------|------------------------------------|
 | Arquitetura-Chefe do AIOS | Garantir conformidade com `001-Architecture` e RFC-0001; aprovar ADRs `ADR-0070..0079`. | `Architecture.md`, `ADR.md`, `RFC.md` |
 | Equipe do Agent Runtime (dono do módulo 007) | Implementar, operar e evoluir o processo Python; responder por SLOs de cold start e loop. | Todos os 26 documentos |
-| Equipe do Runtime Supervisor (`008-Lifecycle`) | Contrato de controle `RuntimeControl` (boot/suspend/resume/kill/drain), *placement*, pool. | `API.md`, `SequenceDiagrams.md`, `StateMachine.md` |
+| Equipe do Runtime Supervisor (`008-Agent-Lifecycle`) | Contrato de controle `RuntimeControl` (boot/suspend/resume/kill/drain), *placement*, pool. | `API.md`, `SequenceDiagrams.md`, `StateMachine.md` |
 | Equipe do 009-Scheduler | Consumidora de eventos de ciclo de vida do runtime para admissão/preempção. | `Events.md`, `API.md` |
 | Equipe do 015-Tool-Manager | Contrato de invocação de ferramenta (autorização, métricas, versão) consumido pelo `ToolInvoker`/`McpHost`. | `API.md`, `SequenceDiagrams.md`, `Events.md` |
 | Equipe do 017-Model-Router | Contrato de inferência consumido pelo `ModelRouterClient` (streaming, fallback). | `API.md`, `SequenceDiagrams.md` |
@@ -208,6 +208,6 @@ Supervisor** (`.NET 10`, plano de controle) e ao barramento NATS/JetStream.
 - Arquitetura global: `../001-Architecture/Architecture.md`
 - Módulo de política: `../022-Policy/`
 - Módulo de escalonamento: `../009-Scheduler/`
-- Módulo de ciclo de vida físico (Runtime Supervisor): `../008-Lifecycle/`
+- Módulo de ciclo de vida físico (Runtime Supervisor): `../008-Agent-Lifecycle/`
 - Módulo de ferramentas: `../015-Tool-Manager/`
 - Módulo de roteamento de modelo: `../017-Model-Router/`
