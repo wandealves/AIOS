@@ -15,13 +15,13 @@
 | Métrica | Valor |
 |---|---|
 | Fundação canônica (000–003, 040) | ✅ 5/5 |
-| Módulos técnicos completos (004–039) | **6 / 36** |
+| Módulos técnicos completos (004–039) | **7 / 36** |
 | Módulos técnicos em andamento | 0 |
-| Documentos técnicos escritos | **154 / 936** (36 módulos × 26 docs) |
+| Documentos técnicos escritos | **180 / 936** (36 módulos × 26 docs) |
 
 ```
 Fundação   [██████████] 100%   (000, 001, 002, 003, 040)
-Módulos    [██░░░░░░░░░]  17%   (6 completos / 36 técnicos)
+Módulos    [██░░░░░░░░░]  19%   (7 completos / 36 técnicos)
 ```
 
 ---
@@ -69,7 +69,7 @@ Fechar os módulos já iniciados e escrever os contratos (API/DB) que os demais 
 
 - [x] ✅ **011-Context** (26/26) — `[x]` brief · `[x]` 26 docs · `[x]` auditoria (0 bloqueantes; defeitos Alto/Médio/Baixo corrigidos)
 - [x] ✅ **007-Agent-Runtime** (26/26) — `[x]` brief · `[x]` 26 docs · `[x]` auditoria (0 bloqueantes; defeitos Alto/Médio/Baixo corrigidos)
-- [ ] ⬜ **004-API** (0/26) — `[ ]` brief · `[ ]` 26 docs · `[ ]` auditoria
+- [x] ✅ **004-API** (26/26) — `[x]` brief · `[x]` 26 docs · `[x]` auditoria (0 bloqueantes; defeitos Maiores/menores corrigidos)
 - [ ] ⬜ **005-Database** (0/26) — `[ ]` brief · `[ ]` 26 docs · `[ ]` auditoria
 
 ---
