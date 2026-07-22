@@ -4,7 +4,7 @@
 > A cada documento ou módulo concluído, **marque o checkbox**, **atualize o contador `(X/26)`**,
 > **recalcule a barra de progresso global** e **atualize a data** abaixo.
 
-**Última atualização:** 2026-07-21
+**Última atualização:** 2026-07-22
 
 **Legenda:** ✅ concluído · 🟨 em andamento · ⬜ pendente
 
@@ -15,13 +15,13 @@
 | Métrica | Valor |
 |---|---|
 | Fundação canônica (000–003, 040) | ✅ 5/5 |
-| Módulos técnicos completos (004–039) | **7 / 36** |
+| Módulos técnicos completos (004–039) | **8 / 36** |
 | Módulos técnicos em andamento | 0 |
-| Documentos técnicos escritos | **180 / 936** (36 módulos × 26 docs) |
+| Documentos técnicos escritos | **206 / 936** (36 módulos × 26 docs) |
 
 ```
 Fundação   [██████████] 100%   (000, 001, 002, 003, 040)
-Módulos    [██░░░░░░░░░]  19%   (7 completos / 36 técnicos)
+Módulos    [██░░░░░░░░░]  22%   (8 completos / 36 técnicos)
 ```
 
 ---
@@ -63,14 +63,14 @@ Base terminológica/arquitetural e os primeiros módulos no padrão de ouro.
 
 ---
 
-## Passo 1 — Concluir em andamento + contratos base 🟨
+## Passo 1 — Concluir em andamento + contratos base ✅ CONCLUÍDO
 
 Fechar os módulos já iniciados e escrever os contratos (API/DB) que os demais mais referenciam.
 
 - [x] ✅ **011-Context** (26/26) — `[x]` brief · `[x]` 26 docs · `[x]` auditoria (0 bloqueantes; defeitos Alto/Médio/Baixo corrigidos)
 - [x] ✅ **007-Agent-Runtime** (26/26) — `[x]` brief · `[x]` 26 docs · `[x]` auditoria (0 bloqueantes; defeitos Alto/Médio/Baixo corrigidos)
 - [x] ✅ **004-API** (26/26) — `[x]` brief · `[x]` 26 docs · `[x]` auditoria (0 bloqueantes; defeitos Maiores/menores corrigidos)
-- [ ] ⬜ **005-Database** (0/26) — `[ ]` brief · `[ ]` 26 docs · `[ ]` auditoria
+- [x] ✅ **005-Database** (26/26) — `[x]` brief · `[x]` 26 docs · `[x]` auditoria (0 bloqueantes; rastreabilidade T-BKP-03 corrigida)
 
 ---
 
