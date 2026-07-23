@@ -15,13 +15,13 @@
 | Métrica | Valor |
 |---|---|
 | Fundação canônica (000–003, 040) | ✅ 5/5 |
-| Módulos técnicos completos (004–039) | **9 / 36** |
+| Módulos técnicos completos (004–039) | **10 / 36** |
 | Módulos técnicos em andamento | 0 |
-| Documentos técnicos escritos | **232 / 936** (36 módulos × 26 docs) |
+| Documentos técnicos escritos | **258 / 936** (36 módulos × 26 docs) |
 
 ```
 Fundação   [██████████] 100%   (000, 001, 002, 003, 040)
-Módulos    [███░░░░░░░░]  25%   (9 completos / 36 técnicos)
+Módulos    [███░░░░░░░░]  28%   (10 completos / 36 técnicos)
 ```
 
 ---
@@ -79,7 +79,7 @@ Fechar os módulos já iniciados e escrever os contratos (API/DB) que os demais 
 Contratos de comunicação, segurança, política, observabilidade e auditoria referenciados por todo o sistema.
 
 - [x] ✅ **020-Communication** (26/26) — `[x]` brief · `[x]` 26 docs · `[x]` auditoria (0 bloqueantes; recording rule `aios_bus_sessions_rejected` documentada)
-- [ ] ⬜ **021-Security** (0/26) — `[ ]` brief · `[ ]` 26 docs · `[ ]` auditoria
+- [x] ✅ **021-Security** (26/26) — `[x]` brief · `[x]` 26 docs · `[x]` auditoria (0 bloqueantes)
 - [ ] ⬜ **022-Policy** (0/26) — `[ ]` brief · `[ ]` 26 docs · `[ ]` auditoria
 - [ ] ⬜ **024-Observability** (0/26) — `[ ]` brief · `[ ]` 26 docs · `[ ]` auditoria
 - [ ] ⬜ **025-Audit** (0/26) — `[ ]` brief · `[ ]` 26 docs · `[ ]` auditoria

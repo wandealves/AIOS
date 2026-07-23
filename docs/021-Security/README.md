@@ -1,25 +1,33 @@
 ---
 Documento: Índice do Módulo
 Módulo: 021-Security
-Status: Skeleton
+Status: Draft
 Versão: 0.1
-Última atualização: 2026-07-20
-Responsável (RACI-A): A definir na fase de fan-out
-Depende de: 022,025
+Última atualização: 2026-07-22
+Responsável (RACI-A): Arquiteto do Módulo 021-Security
+ADRs relacionados: ADR-0210..0219 (a propor); ADR-0008, ADR-0010 (globais)
+RFCs relacionados: RFC-0001 (§6); RFC-0210, RFC-0211 (a propor)
+Depende de: 001,003,005,020,022,024,025,027,028
 ---
 
 # AIOS — Módulo 021 · Security
 
 > **Propósito.** AuthN/AuthZ (OAuth2/OIDC), RBAC/ABAC, secrets, TLS/mTLS, sandbox, criptografia, LGPD/GDPR.
 
-> **Status:** Esqueleto. Este módulo faz parte do fan-out planejado após a
-> aprovação da fundação canônica (`000-Vision`, `001-Architecture`, `040-Glossary`,
-> `002-ADR`, `003-RFC`). Cada documento abaixo DEVE ser produzido conforme
-> `../_templates/MODULE_TEMPLATE.md` e em conformidade com `../003-RFC/RFC-0001-Architecture-Baseline.md`.
+> **Status:** Draft. O fan-out do módulo está concluído: os 26 documentos
+> obrigatórios foram produzidos conforme `../_templates/MODULE_TEMPLATE.md` e em
+> conformidade com `../003-RFC/RFC-0001-Architecture-Baseline.md`, derivados do
+> `_DESIGN_BRIEF.md`. Refinamentos rumo a `Stable` seguem o Definition of Done abaixo.
 
 ## Dependências
 
-Este módulo depende de: **022,025**. Reutilize as definições do
+Este módulo depende de: **022-Policy** (PDP), **025-Audit** (trilha),
+**005-Database** (schema `security`), **020-Communication** (NATS),
+**024-Observability**, **027-Cluster** e **028-Deployment** (atestação de workload).
+É consumido por **004-API** (JWKS), **005-Database** (roles), **007-Agent-Runtime**
+(perfis de sandbox e segredos), **017-Model-Router** (chaves de provedor),
+**020-Communication** (contas NKey/JWT) e por todos os serviços que usam mTLS.
+Reutilize as definições do
 `../040-Glossary/Glossary.md` e os contratos centrais da RFC-0001 (URN, envelope
 de evento, envelope de erro, idempotência, correlação).
 
@@ -27,32 +35,32 @@ de evento, envelope de erro, idempotência, correlação).
 
 | # | Documento | Status | Descrição |
 |---|-----------|--------|-----------|
-| 1 | `Vision.md` | ⬜ Planned | Propósito, escopo, personas, princípios e não-objetivos do módulo. |
-| 2 | `Architecture.md` | ⬜ Planned | C4 (contexto→componente) em ASCII, componentes internos e padrões. |
-| 3 | `Requirements.md` | ⬜ Planned | Índice de requisitos e matriz de rastreabilidade. |
-| 4 | `FunctionalRequirements.md` | ⬜ Planned | Tabela FR-NNN com critérios de aceite (MoSCoW). |
-| 5 | `NonFunctionalRequirements.md` | ⬜ Planned | Tabela NFR-NNN com SLO/SLI e método de verificação. |
-| 6 | `UseCases.md` | ⬜ Planned | Casos de uso UC-NNN (ator/fluxos/exceções). |
-| 7 | `SequenceDiagrams.md` | ⬜ Planned | Sequências ASCII dos fluxos críticos (feliz + falha). |
-| 8 | `ClassDiagrams.md` | ⬜ Planned | Estruturas/interfaces/contratos e invariantes (ASCII). |
-| 9 | `StateMachine.md` | ⬜ Planned | Estados, transições, guardas e ações. |
-| 10 | `Database.md` | ⬜ Planned | Modelo físico, DDL, índices, particionamento, retenção. |
-| 11 | `API.md` | ⬜ Planned | Contratos REST (OpenAPI) e gRPC (proto), erros, idempotência. |
-| 12 | `Events.md` | ⬜ Planned | Catálogo de eventos NATS (subject, schema, semântica). |
-| 13 | `Configuration.md` | ⬜ Planned | Chaves de config, defaults, faixas e escopo. |
-| 14 | `Deployment.md` | ⬜ Planned | Topologia, recursos, réplicas, health/readiness, rollout. |
-| 15 | `Security.md` | ⬜ Planned | AuthN/Z, threat model STRIDE, secrets, mTLS, LGPD/GDPR. |
-| 16 | `Monitoring.md` | ⬜ Planned | Dashboards, alertas Prometheus, SLO/SLA e runbooks. |
-| 17 | `Logging.md` | ⬜ Planned | Log estruturado (Serilog→Seq), campos e correlação. |
-| 18 | `Metrics.md` | ⬜ Planned | Catálogo de métricas OTel/Prometheus (nome/tipo/labels). |
-| 19 | `Testing.md` | ⬜ Planned | Estratégia de testes (unit/integration/contract/e2e/chaos). |
-| 20 | `Benchmark.md` | ⬜ Planned | Metodologia, cargas, KPIs e resultados-alvo. |
-| 21 | `FailureRecovery.md` | ⬜ Planned | FMEA, detecção, recuperação, idempotência, RTO/RPO. |
-| 22 | `Scalability.md` | ⬜ Planned | Modelo de escala, sharding, concorrência e limites. |
-| 23 | `Examples.md` | ⬜ Planned | Exemplos executáveis (CLI/SDK/API) comentados. |
-| 24 | `FAQ.md` | ⬜ Planned | Perguntas frequentes e armadilhas comuns. |
-| 25 | `ADR.md` | ⬜ Planned | Índice de ADRs que afetam o módulo (link p/ 002-ADR). |
-| 26 | `RFC.md` | ⬜ Planned | Índice de RFCs relacionadas (link p/ 003-RFC). |
+| 1 | `Vision.md` | 🟨 Draft | Propósito, escopo, personas, princípios e não-objetivos do módulo. |
+| 2 | `Architecture.md` | 🟨 Draft | C4 (contexto→componente) em ASCII, componentes internos e padrões. |
+| 3 | `Requirements.md` | 🟨 Draft | Índice de requisitos e matriz de rastreabilidade. |
+| 4 | `FunctionalRequirements.md` | 🟨 Draft | Tabela FR-NNN com critérios de aceite (MoSCoW). |
+| 5 | `NonFunctionalRequirements.md` | 🟨 Draft | Tabela NFR-NNN com SLO/SLI e método de verificação. |
+| 6 | `UseCases.md` | 🟨 Draft | Casos de uso UC-NNN (ator/fluxos/exceções). |
+| 7 | `SequenceDiagrams.md` | 🟨 Draft | Sequências ASCII dos fluxos críticos (feliz + falha). |
+| 8 | `ClassDiagrams.md` | 🟨 Draft | Estruturas/interfaces/contratos e invariantes (ASCII). |
+| 9 | `StateMachine.md` | 🟨 Draft | Estados, transições, guardas e ações. |
+| 10 | `Database.md` | 🟨 Draft | Modelo físico, DDL, índices, particionamento, retenção. |
+| 11 | `API.md` | 🟨 Draft | Contratos REST (OpenAPI) e gRPC (proto), erros, idempotência. |
+| 12 | `Events.md` | 🟨 Draft | Catálogo de eventos NATS (subject, schema, semântica). |
+| 13 | `Configuration.md` | 🟨 Draft | Chaves de config, defaults, faixas e escopo. |
+| 14 | `Deployment.md` | 🟨 Draft | Topologia, recursos, réplicas, health/readiness, rollout. |
+| 15 | `Security.md` | 🟨 Draft | AuthN/Z, threat model STRIDE, secrets, mTLS, LGPD/GDPR. |
+| 16 | `Monitoring.md` | 🟨 Draft | Dashboards, alertas Prometheus, SLO/SLA e runbooks. |
+| 17 | `Logging.md` | 🟨 Draft | Log estruturado (Serilog→Seq), campos e correlação. |
+| 18 | `Metrics.md` | 🟨 Draft | Catálogo de métricas OTel/Prometheus (nome/tipo/labels). |
+| 19 | `Testing.md` | 🟨 Draft | Estratégia de testes (unit/integration/contract/e2e/chaos). |
+| 20 | `Benchmark.md` | 🟨 Draft | Metodologia, cargas, KPIs e resultados-alvo. |
+| 21 | `FailureRecovery.md` | 🟨 Draft | FMEA, detecção, recuperação, idempotência, RTO/RPO. |
+| 22 | `Scalability.md` | 🟨 Draft | Modelo de escala, sharding, concorrência e limites. |
+| 23 | `Examples.md` | 🟨 Draft | Exemplos executáveis (CLI/SDK/API) comentados. |
+| 24 | `FAQ.md` | 🟨 Draft | Perguntas frequentes e armadilhas comuns. |
+| 25 | `ADR.md` | 🟨 Draft | Índice de ADRs que afetam o módulo (link p/ 002-ADR). |
+| 26 | `RFC.md` | 🟨 Draft | Índice de RFCs relacionadas (link p/ 003-RFC). |
 
 ## Definition of Done
 
