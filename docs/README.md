@@ -54,7 +54,7 @@ sem tomar decisões arquiteturais não documentadas.
 | 019 | [GraphRAG](019-GraphRAG/) | Recuperação aumentada por grafo | 🟨 Skeleton |
 | 020 | [Communication](020-Communication/) | Barramento NATS, A2A | 🟨 Skeleton |
 | 021 | [Security](021-Security/) | AuthN/Z, mTLS, sandbox, LGPD/GDPR | 🟨 Skeleton |
-| 022 | [Policy](022-Policy/) | Policy Engine (PDP), RBAC/ABAC | 🟨 Skeleton |
+| 022 | [Policy](022-Policy/) | Policy Engine (PDP), RBAC/ABAC | 🟨 Draft |
 | 023 | [Learning](023-Learning/) | Aprendizado contínuo | 🟨 Skeleton |
 | 024 | [Observability](024-Observability/) | OTel, métricas, traces, logs | 🟨 Skeleton |
 | 025 | [Audit](025-Audit/) | Auditoria imutável | 🟨 Skeleton |

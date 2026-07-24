@@ -4,7 +4,7 @@
 > A cada documento ou módulo concluído, **marque o checkbox**, **atualize o contador `(X/26)`**,
 > **recalcule a barra de progresso global** e **atualize a data** abaixo.
 
-**Última atualização:** 2026-07-22
+**Última atualização:** 2026-07-23
 
 **Legenda:** ✅ concluído · 🟨 em andamento · ⬜ pendente
 
@@ -15,13 +15,13 @@
 | Métrica | Valor |
 |---|---|
 | Fundação canônica (000–003, 040) | ✅ 5/5 |
-| Módulos técnicos completos (004–039) | **10 / 36** |
+| Módulos técnicos completos (004–039) | **11 / 36** |
 | Módulos técnicos em andamento | 0 |
-| Documentos técnicos escritos | **258 / 936** (36 módulos × 26 docs) |
+| Documentos técnicos escritos | **284 / 936** (36 módulos × 26 docs) |
 
 ```
 Fundação   [██████████] 100%   (000, 001, 002, 003, 040)
-Módulos    [███░░░░░░░░]  28%   (10 completos / 36 técnicos)
+Módulos    [███░░░░░░░░]  31%   (11 completos / 36 técnicos)
 ```
 
 ---
@@ -80,7 +80,7 @@ Contratos de comunicação, segurança, política, observabilidade e auditoria r
 
 - [x] ✅ **020-Communication** (26/26) — `[x]` brief · `[x]` 26 docs · `[x]` auditoria (0 bloqueantes; recording rule `aios_bus_sessions_rejected` documentada)
 - [x] ✅ **021-Security** (26/26) — `[x]` brief · `[x]` 26 docs · `[x]` auditoria (0 bloqueantes)
-- [ ] ⬜ **022-Policy** (0/26) — `[ ]` brief · `[ ]` 26 docs · `[ ]` auditoria
+- [x] ✅ **022-Policy** (26/26) — `[x]` brief · `[x]` 26 docs · `[x]` auditoria (0 bloqueantes; ULIDs de exemplo normalizados para 26 caracteres Crockford e referência ADR-0069→ADR-0063 corrigida)
 - [ ] ⬜ **024-Observability** (0/26) — `[ ]` brief · `[ ]` 26 docs · `[ ]` auditoria
 - [ ] ⬜ **025-Audit** (0/26) — `[ ]` brief · `[ ]` 26 docs · `[ ]` auditoria
 
