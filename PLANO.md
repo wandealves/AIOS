@@ -15,13 +15,13 @@
 | Métrica | Valor |
 |---|---|
 | Fundação canônica (000–003, 040) | ✅ 5/5 |
-| Módulos técnicos completos (004–039) | **12 / 36** |
+| Módulos técnicos completos (004–039) | **13 / 36** |
 | Módulos técnicos em andamento | 0 |
-| Documentos técnicos escritos | **310 / 936** (36 módulos × 26 docs) |
+| Documentos técnicos escritos | **336 / 936** (36 módulos × 26 docs) |
 
 ```
 Fundação   [██████████] 100%   (000, 001, 002, 003, 040)
-Módulos    [████░░░░░░░]  33%   (12 completos / 36 técnicos)
+Módulos    [████░░░░░░░]  36%   (13 completos / 36 técnicos)
 ```
 
 ---
@@ -74,7 +74,7 @@ Fechar os módulos já iniciados e escrever os contratos (API/DB) que os demais 
 
 ---
 
-## Passo 2 — Plataforma transversal 🟨
+## Passo 2 — Plataforma transversal ✅ CONCLUÍDO
 
 Contratos de comunicação, segurança, política, observabilidade e auditoria referenciados por todo o sistema.
 
@@ -82,7 +82,7 @@ Contratos de comunicação, segurança, política, observabilidade e auditoria r
 - [x] ✅ **021-Security** (26/26) — `[x]` brief · `[x]` 26 docs · `[x]` auditoria (0 bloqueantes)
 - [x] ✅ **022-Policy** (26/26) — `[x]` brief · `[x]` 26 docs · `[x]` auditoria (0 bloqueantes; ULIDs de exemplo normalizados para 26 caracteres Crockford e referência ADR-0069→ADR-0063 corrigida)
 - [x] ✅ **024-Observability** (26/26) — `[x]` brief · `[x]` 26 docs · `[x]` auditoria (0 bloqueantes; subject `telemetry.slo.budget.exhausted` corrigido para `telemetry.budget.exhausted` — RFC-0001 §5.3 exige 5 segmentos)
-- [ ] ⬜ **025-Audit** (0/26) — `[ ]` brief · `[ ]` 26 docs · `[ ]` auditoria
+- [x] ✅ **025-Audit** (26/26) — `[x]` brief · `[x]` 26 docs · `[x]` auditoria (0 bloqueantes; ULID de exemplo com caractere `U` inválido em Crockford base32 corrigido)
 
 ---
 
