@@ -56,7 +56,7 @@ sem tomar decisões arquiteturais não documentadas.
 | 021 | [Security](021-Security/) | AuthN/Z, mTLS, sandbox, LGPD/GDPR | 🟨 Skeleton |
 | 022 | [Policy](022-Policy/) | Policy Engine (PDP), RBAC/ABAC | 🟨 Draft |
 | 023 | [Learning](023-Learning/) | Aprendizado contínuo | 🟨 Skeleton |
-| 024 | [Observability](024-Observability/) | OTel, métricas, traces, logs | 🟨 Skeleton |
+| 024 | [Observability](024-Observability/) | OTel, métricas, traces, logs | 🟨 Draft |
 | 025 | [Audit](025-Audit/) | Auditoria imutável | 🟨 Skeleton |
 | 026 | [Cost-Optimizer](026-Cost-Optimizer/) | Otimização de custo de inferência | 🟨 Skeleton |
 | 027 | [Cluster](027-Cluster/) | HA, DR, sharding, failover | 🟨 Skeleton |
